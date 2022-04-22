@@ -72,7 +72,7 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # ===========================================================
   config.vm.synced_folder "/mnt/hd1tb/Vagrant/data", "/vagrant_data"
-
+ 
   # ===========================================================
   # PROVIDERS
   # ===========================================================
@@ -127,6 +127,9 @@ Vagrant.configure("2") do |config|
   # -----------------------------------------------------------
   # shell - external
   # -----------------------------------------------------------
+  # Configurações comuns para todas VMs
   config.vm.provision "shell", path: "config/fedora35_common_config_1.sh"
+  # Instalação Docker
+  config.vm.provision "shell", path: "config/fedora35_docker_install.sh"
 
 end

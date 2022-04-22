@@ -1,5 +1,99 @@
 # -------------------------------------------------------------------
-# Instruções gerais a respeito da instalação / preparação do ambiente 
+# Projeto: Ambiente complexo virtualizado
+# -------------------------------------------------------------------
+
+Criado por:   Daniel Mello Carreira
+Criado em:    21/04/2022
+
+Objetivo:     Criar um ambiente virtualizado com uma infraestrutura similar a um ambiente corporativo
+              real on-premise que possa ser executado em um laptop Intel Corei7 rodando Linux Fedora 
+              com 8GBytes de memória RAM
+
+Restrições
+    Não usar Windows
+    Vagrant como IAS (Infrastructure as Code)
+    Virtualbox como virtualizador
+    Docker para containers
+    Autenticação LDAP
+    Balanceamento de carga
+    APIs com Autenticação oAuth
+    HTTPs: comunicação segura entre servers
+    Bancos de dados no Host
+    Códigos-fonte no Host
+    Bugzilla como controle de bugs
+    Git como SCM/VCS
+        Github
+        Gitlab
+
+Host
+    Software 
+        Linux Fedora 35
+        VirtualBox 6.1
+        Vagrant V. 2.2.16
+        VisualStudioCode 1.66.2
+            Markdownlint
+            Remote - SSH
+            Vagrant
+            YAML
+    Pontos para montagem
+        /mnt/hd1tb/Vagrant/data: dados das aplicações e código-fonte
+            /scr: código-fonte dos projetos
+            /db: bancos de dados
+        /mnt/hd1tb/Vagrant/boxes
+
+VMs
+    Nome
+        vf35vm
+    Tipo
+        Vagrant
+    Descrição
+        VM Host da plataforma de containers 
+    SO  
+        Vagrant Box fedora/35-cloud-base (Fedora 35 cloud edition)
+    HOMEDIR
+        /mnt/hd1tb/Vagrant/boxes/fedora35-cloud-based
+    Docker
+        Version 20.10.14 build a224086
+        Containers
+            hello-world
+            nodejs
+    Montagens
+        Host:<diretorio da box> => /vagrant
+        Host:/mnt/hd1tb/Vagrant/data => /vagrant_data
+
+Servers
+    Applicaton
+        J2EE: Wildfly
+        J2EE: Glassfish
+        J233: TomEE
+        WEB server: Tomcat
+        WEB server: Jetty
+        Nodejs
+    Database
+        MariaDb
+        Postgre
+        Oracle Express
+        Redis
+        MongoDB
+        Couch
+    Infrastructure 
+        Proxy 
+        LDAP 
+        Firewall: IPTables
+        Api Gateway: Mulesoft
+        Cache
+        VPN
+        DNS
+        Jenkins
+        Maven
+
+Linguagens
+    Nodejs
+    Java
+    Python
+
+# -------------------------------------------------------------------
+# HOST: instruções gerais a respeito da instalação / preparação do ambiente 
 # -------------------------------------------------------------------
 
 1) Instalar o VirtualBox
@@ -36,7 +130,7 @@
 
 2) Instalar o Vagrant
 
-        sudo dnf -y install vagrant
+    sudo dnf -y install vagrant
 
 3) Arquivo ~/.bashrc: 
     
@@ -51,19 +145,23 @@
     alias h  ="cd ~/. #home dir"
 
     # Comandos
-    alias vu ='vagrant up #vu'
-    alias vup='vagrant up --provision #vup'
-    alias vp ='vagrant provision #vp'
-    alias vgs='vagrant global-status #vgs'
-    alias vh ='vagrant halt #vh'
-    alias vhf='vagrant halt --force #vhf'
-    alias vd ='vagrant destroy #vd'
-    alias vdf='vagrant destroy --force #vdf'
-    alias vs ='vagrant status <id> #vs'
-    alias vbl='vagrant box list #vbl'
+    alias vu='vagrant up $1'
+    alias vup='vagrant up $1 --provision'
+    alias vp='vagrant provision $1'
+    alias vs='vagrant ssh $1'
+    alias vgs='vagrant global-status'
+    alias vh='vagrant halt $1'
+    alias vhf='vagrant halt $1 --force'
+    alias vd='vagrant destroy $1'
+    alias vdf='vagrant destroy $1 --force'
+    alias vs='vagrant status $1'
+    alias vbl='vagrant box list'
+
 
     # PATH customizado
     PATH=$PATH:~/bin
 
     # PATH customizado - Local que baixa os boxes e guarda demais configurações comuns para VMs
     export VAGRANT_HOME=/mnt/hd1tb/Vagrant/home
+
+4) Automatizar integração com os repositórios GIT através de chave RSA no ~.ssh/config
