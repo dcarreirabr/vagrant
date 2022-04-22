@@ -31,12 +31,19 @@ dnf install -y docker-ce docker-ce-cli containerd.io
 # Documentação para instalação de versão específica
 #   https://docs.docker.com/engine/install/fedora/#install-using-the-repository
 
-# Iniciliza o serviço
+# Inicializa o serviço
 systemctl start docker
-
-# Roda o container Hello World
-docker run hello-world
 
 # Pos instalação
 groupadd docker
 sudo usermod -aG docker $USER #tem que ser com o sudo no caso é o user vagrant (default)
+
+# Roda o container Hello World
+# docker run hello-world
+
+# Cria imagem da aplicação e roda na porta definida no Dockerfile: 
+# Entra no diretorio do Dockerfile
+cd /vagrant_data/src/alura-docker/app-exemplo 
+# Builda a imagem da aplicação com o node. Execução está descrita no Dockerfile também.
+docker build -t dcarreirabr/alura-node-app-exemplo:1.0
+
