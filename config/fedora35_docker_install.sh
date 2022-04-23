@@ -45,7 +45,6 @@ usermod -aG docker $USER #tem que ser com o sudo no caso é o user vagrant (defa
 
 # Cria rede para comunicação entre containers
 docker network create \
-    #modo bridge
     --driver bridge bridge-vagrant
 
 # Realiza outra atualização do SO
