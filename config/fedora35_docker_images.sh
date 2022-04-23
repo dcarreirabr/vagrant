@@ -1,5 +1,9 @@
 # Cria imagem da aplicação e roda na porta definida no Dockerfile: 
 
+echo "**************************************************************************************"
+echo "*** Processamento arquivo script: "
+echo "*** boxes/fedora35-cloud-based/config/fedora35_docker_images.sh"
+echo "**************************************************************************************"
 
 # Remove todas as imagens baixadas 
 docker image rm $(docker image ls -qa) --force 
