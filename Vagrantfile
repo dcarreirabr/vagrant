@@ -92,8 +92,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider "virtualbox" do |v|
     v.gui = false
-    v.memory = 1024
-    v.cpus = 2
+    v.memory = 2048
+    v.cpus = 3
     v.name = "vf35vm"
     v.check_guest_additions = true #default = true
    end
@@ -127,9 +127,17 @@ Vagrant.configure("2") do |config|
   # -----------------------------------------------------------
   # shell - external
   # -----------------------------------------------------------
+  
   # Configurações comuns para todas VMs
   config.vm.provision "shell", path: "config/fedora35_common_config_1.sh"
-  # Instalação Docker
+  
+  # Docker: instalação e configuração 
   config.vm.provision "shell", path: "config/fedora35_docker_install.sh"
+  
+  # Docker: cria imagens customizadas
+  config.vm.provision "shell", path: "config/fedora35_docker_images.sh"
+  
+  # Docker: cria containers 
+  config.vm.provision "shell", path: "config/fedora35_docker_containers.sh"
 
 end
